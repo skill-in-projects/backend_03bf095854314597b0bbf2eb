@@ -26,6 +26,9 @@ class TestController
 
     public function getAll(): array
     {
+        // This will raise a DivisionByZeroError
+        $result = 1 / 0;
+        
         // Set search_path to public schema (required because isolated role has restricted search_path)
         $this->setSearchPath();
         $stmt = $this->db->query('SELECT "Id", "Name" FROM "TestProjects" ORDER BY "Id"');
@@ -39,7 +42,6 @@ class TestController
             ];
         }
         return $projects;
-        // Do NOT catch generic Exception - let it bubble up to global exception handler
     }
 
     public function getById(int $id): ?array
